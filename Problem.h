@@ -39,25 +39,27 @@ public:
 
     void generateSimulations(int num_gen){
         int prob = 1000;
-        Graph best_graph = *getBestGraph();
+        std::shared_ptr<Graph> best_graph = getBestGraph();
         for(int i = 0; i < num_gen; i++){
             std::cout << "Generation: " << i << "\n";
-            std::cout << "Best fitness found: " << best_graph.getFitness() << std::endl;
-            if(getBestGraph()->getFitness() < best_graph.getFitness())
-                best_graph = *getBestGraph();
-            std::cout << "Generating parents: "<< std::endl;
+            std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
+            if(getBestGraph()->getFitness() < best_graph->getFitness()) {
+                best_graph = getBestGraph();
+                std::cout << getBestGraph()->getFitness() << "vs" << best_graph->getFitness() << std::endl;
+            }
+            //std::cout << "Generating parents: "<< std::endl;
             std::vector<Graph> parent_list = selectParentList();
-            std::cout << "Generating children: "<< std::endl;
+            //std::cout << "Generating children: "<< std::endl;
             std::vector<Graph> child_list = crossOverPopulation(parent_list);
-            std::cout << "Mutating: "<< std::endl;
+            //std::cout << "Mutating: "<< std::endl;
             mutatePopulation(prob);
-            std::cout << "Selecting next generation: "<< std::endl;
+            //std::cout << "Selecting next generation: "<< std::endl;
             selectNextGeneration(child_list);
         }
         std::cout << "Finished " << num_gen << " generations \n";
-        std::cout << "Best fitness found: " << best_graph.getFitness() << std::endl;
+        std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
-        best_graph.exportToDot("best_solution_found.txt");
+        best_graph->exportToDot("best_solution_found.txt");
 
     }
 
