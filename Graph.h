@@ -5,7 +5,7 @@
 #ifndef GRAPHCOLORING_GRAPH_H
 #include "Node.h"
 #include <boost/graph/graphviz.hpp>
-
+#include "boost/graph/sequential_vertex_coloring.hpp"
 
 struct vertex_info {
     int id;
@@ -15,7 +15,8 @@ struct vertex_info {
 
 
 class Graph{
-    typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, vertex_info, boost::no_property > MyGraph;
+    typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, vertex_info, int, boost::property<boost::vertex_color_t, boost::default_color_type>> MyGraph;
+    typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, boost::property<boost::vertex_index_t, int, boost::property<boost::vertex_color_t, boost::default_color_type>>>  GraphType;
 public:
     std::vector<Node> NodeList;
     unsigned long fitness;

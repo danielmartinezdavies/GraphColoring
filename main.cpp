@@ -1,7 +1,8 @@
 #include "Problem.h"
+#include "Parameters.h"
 
 int main() {
-    Problem p("../examples/input_file3.txt", 500);
-    p.generateSimulations(500);
+    Problem p(input_file, population_size, mutation_prob, tournament_size, replace_old_generation);
+    p.generateSimulations(generations_since_improvement);
     return 0;
 }

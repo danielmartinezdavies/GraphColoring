@@ -5,6 +5,7 @@
 #ifndef GRAPHCOLORING_PROBLEM_H
 #define GRAPHCOLORING_PROBLEM_H
 #include "Graph.h"
+#include "boost/graph/sequential_vertex_coloring.hpp"
 
 class Problem{
     std::vector<Graph> graph_list;
@@ -14,7 +15,7 @@ class Problem{
     const int tournament_size = 2;
     const bool replace_old_generation = true;
 public:
-    Problem(const std::string &input_file, int size){
+    Problem(const std::string &input_file, int size, int mutation_prob, int tournament_size, bool replace_old_generation): mutation_prob(mutation_prob), tournament_size(tournament_size), replace_old_generation(replace_old_generation){
         Graph g1(input_file);
 
         for(int i = 0; i < g1.NodeList.size(); i++){
@@ -46,17 +47,22 @@ public:
     void generateSimulations(int num_gen){
         std::shared_ptr<Graph> best_graph = getBestGraph();
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
-        for(int i = 0; i < num_gen; i++){
+
+        int num_gens_since_improve = 0;
+        for(int i = 0; true; i++){
+            if(num_gens_since_improve > num_gen) break;
             std::cout << "Generation: " << i << "\n";
             if(getBestGraph()->getFitness() < best_graph->getFitness()) {
                 best_graph = getBestGraph();
                 std::cout << "New best fitness found: " << best_graph->getFitness() << std::endl;
+                num_gens_since_improve = 0;
             }
 
             std::vector<Graph> parent_list = selectParentList(tournament_size);
             std::vector<Graph> child_list = crossOverPopulation(parent_list);
             mutatePopulation(mutation_prob, color_list);
             selectNextGeneration(child_list, replace_old_generation);
+            num_gens_since_improve++;
         }
         std::cout << "Finished " << num_gen << " generations \n";
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
@@ -64,6 +70,7 @@ public:
         best_graph->exportToDot("best_solution_found.txt");
 
     }
+
 
     void exportPopulationToFile(){
         for(int i = 0; i < graph_list.size(); i++){
