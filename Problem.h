@@ -9,15 +9,21 @@
 class Problem{
     std::vector<Graph> graph_list;
     std::vector<std::string> color_list;
+
+    const int mutation_prob = 1000;
+    const int tournament_size = 2;
+    const bool replace_old_generation = true;
 public:
     Problem(const std::string &input_file, int size){
+        Graph g1(input_file);
 
-        for(int i = 0; i < size; i++){
+        for(int i = 0; i < g1.NodeList.size(); i++){
             color_list.emplace_back(generate_hex_color_code());
         }
-
-        Graph g1(input_file, color_list);
+        g1.colorGraph(color_list);
         graph_list.push_back(g1);
+
+
         for(int i = 1; i < size; i++){
             Graph g2(g1);
             g2.colorGraph(color_list);
@@ -38,23 +44,21 @@ public:
     }
 
     void generateSimulations(int num_gen){
-        int prob = 1000;
         std::shared_ptr<Graph> best_graph = getBestGraph();
         for(int i = 0; i < num_gen; i++){
             std::cout << "Generation: " << i << "\n";
             std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
             if(getBestGraph()->getFitness() < best_graph->getFitness()) {
                 best_graph = getBestGraph();
-                std::cout << getBestGraph()->getFitness() << "vs" << best_graph->getFitness() << std::endl;
             }
             //std::cout << "Generating parents: "<< std::endl;
-            std::vector<Graph> parent_list = selectParentList();
+            std::vector<Graph> parent_list = selectParentList(tournament_size);
             //std::cout << "Generating children: "<< std::endl;
             std::vector<Graph> child_list = crossOverPopulation(parent_list);
             //std::cout << "Mutating: "<< std::endl;
-            mutatePopulation(prob);
+            mutatePopulation(mutation_prob, color_list);
             //std::cout << "Selecting next generation: "<< std::endl;
-            selectNextGeneration(child_list);
+            selectNextGeneration(child_list, replace_old_generation);
         }
         std::cout << "Finished " << num_gen << " generations \n";
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
@@ -78,17 +82,16 @@ public:
         }
         return best_graph;
     }
-    std::vector<Graph> selectParentList(){
+    std::vector<Graph> selectParentList(int tournament_s){
         std::vector<Graph> parent_list;
-        int tournament_size = 2;
         for(int i = 0; i < graph_list.size(); i++){
             std::vector<unsigned long> tournament_list;
-            for(int j = 0; j < tournament_size; j++){
+            for(int j = 0; j < tournament_s; j++){
                 std::uniform_int_distribution<std::mt19937::result_type> dist(0,graph_list.size()-1);
                 tournament_list.push_back(dist(rng));
             }
             unsigned long best_graph = tournament_list[0];
-            for(int j = 0; j < tournament_size; j++){
+            for(int j = 0; j < tournament_s; j++){
                 if(graph_list[tournament_list[j]].getFitness() < graph_list[best_graph].getFitness())
                     best_graph = tournament_list[j];
             }
@@ -103,25 +106,27 @@ public:
             std::uniform_int_distribution<std::mt19937::result_type> dist(0,parent_list.size()-1);
             Graph father = parent_list[dist(rng)];
             Graph mother = parent_list[dist(rng)];
-            Graph child(father, empty_color);
-            child.crossOver(father, mother);
+            Graph child(father);
+            child.colorGraphEmpty();
+            child.crossOver(father, mother, color_list);
             child_list.emplace_back(child);
         }
         return child_list;
     }
 
-    void mutatePopulation(int prob){
+    void mutatePopulation(int prob, const std::vector<std::string> &color_list){
         for(auto graph : graph_list){
-            graph.mutate(prob);
+            graph.mutate(prob, color_list);
         }
     }
 
-    void selectNextGeneration(const std::vector<Graph> &child_list){
-        /*unsigned long size = graph_list.size();
+    void selectNextGeneration(const std::vector<Graph> &child_list, bool replace_old_generation){
+        if(replace_old_generation) graph_list = child_list;
+
+        unsigned long size = graph_list.size();
         graph_list.insert( graph_list.end(), child_list.begin(), child_list.end());
         std::sort(graph_list.begin(), graph_list.end(), [](const Graph &g1, const Graph &g2) {return g1.getFitness() < g2.getFitness();});
-        graph_list.erase(graph_list.begin() + size, graph_list.end());*/
-        graph_list = child_list;
+        graph_list.erase(graph_list.begin() + size, graph_list.end());
     }
 };
 

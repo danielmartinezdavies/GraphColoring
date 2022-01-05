@@ -32,7 +32,6 @@ public:
         return valid_color_list[index];
     }
     bool hasValidColor(const std::vector<Node> &NodeList, const std::string &color) const{
-        if(color == empty_color) return true;
         for(const auto &index :this->adjacentNodeList){
             if(NodeList[index].color == color) return false;
         }

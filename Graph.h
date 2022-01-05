@@ -18,10 +18,9 @@ class Graph{
     typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, vertex_info, boost::no_property > MyGraph;
 public:
     std::vector<Node> NodeList;
-    const std::vector<std::string> color_list;
     unsigned long fitness;
 
-    Graph(const std::string &input_name, const std::vector<std::string> &color_list): color_list(color_list){
+    Graph(const std::string &input_name){
         std::ifstream input_file(input_name);
 
         MyGraph graph;
@@ -41,7 +40,6 @@ public:
             NodeList[edge.m_source].adjacentNodeList.push_back(edge.m_target);
             NodeList[edge.m_target].adjacentNodeList.push_back(edge.m_source);
         }
-        colorGraph(color_list);
     }
 
     Graph& operator=(const Graph& g){
@@ -49,12 +47,8 @@ public:
         this->fitness = g.fitness;
         return *this;
     }
-    Graph(const Graph &g): color_list(g.color_list), NodeList(g.NodeList){
-        colorGraph(color_list);
-    }
-    Graph(const Graph &g, std::string color): color_list(g.color_list), NodeList(g.NodeList){
-        colorGraph({color});
-    }
+    Graph(const Graph &g): NodeList(g.NodeList), fitness(g.fitness){}
+
     ~Graph(){}
 
     void colorGraph(const std::vector<std::string> &color_list) {
@@ -63,8 +57,14 @@ public:
         }
         fitness = getNumColorsUsed();
     }
+    void colorGraphEmpty() {
+        for(auto &node : NodeList){
+            node.color = empty_color;
+        }
+        fitness = getNumColorsUsed();
+    }
 
-    void colorGraph(const Graph& father, const Graph& mother){
+    void colorGraph(const Graph& father, const Graph& mother,const std::vector<std::string> &color_list){
         std::uniform_int_distribution<std::mt19937::result_type> dist2(0,1);
         for(int i = 0; i < father.NodeList.size();i++){
             auto &child_node = NodeList[i];
@@ -81,11 +81,11 @@ public:
         fitness = getNumColorsUsed();
     }
 
-    void crossOver(const Graph& father, const Graph& mother){
-        colorGraph(father, mother);
+    void crossOver(const Graph& father, const Graph& mother, const std::vector<std::string> &color_list){
+        colorGraph(father, mother, color_list);
     }
 
-    void mutate(int prob){
+    void mutate(int prob, const std::vector<std::string> &color_list){
         std::uniform_int_distribution<std::mt19937::result_type> dist(0,prob);
         for(auto &node : NodeList){
             if(dist(rng) == 0)
