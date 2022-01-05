@@ -27,7 +27,7 @@ public:
             if(this->hasValidColor(NodeList, color)) valid_color_list.push_back(color);
         }
 
-        std::uniform_int_distribution<std::mt19937::result_type> dist6(0,valid_color_list.size()-1); // distribution in range [1, 6]
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(0,valid_color_list.size()-1);
         return valid_color_list[dist6(rng)];
     }
     bool hasValidColor(const std::vector<Node> &NodeList, const std::string &color) const{

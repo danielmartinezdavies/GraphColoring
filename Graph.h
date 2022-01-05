@@ -14,8 +14,6 @@ struct vertex_info {
 };
 
 
-
-
 class Graph{
     typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS, vertex_info, boost::no_property > MyGraph;
 public:
@@ -50,13 +48,33 @@ public:
         colorGraph(color_list);
     }
 
-    void colorGraph(const std::vector<std::string> &color_list){
+    void colorGraph(const std::vector<std::string> &color_list) {
         for(auto &node : NodeList){
             node.color = node.generateValidColor(NodeList, color_list);
         }
     }
 
-    void exportToDot(const std::string& filename){
+    void colorGraph(const Graph& father, const Graph& mother){
+        std::uniform_int_distribution<std::mt19937::result_type> dist2(0,1);
+        for(int i = 0; i < father.NodeList.size();i++){
+            auto &child_node = NodeList[i];
+            auto &father_node = father.NodeList[i];
+            auto &mother_node = mother.NodeList[i];
+            auto rnd = dist2(rng);
+            if(rnd == 0 && child_node.hasValidColor(NodeList, father_node.color))
+                child_node.color = father_node.color;
+            else if(child_node.hasValidColor(NodeList, mother_node.color))
+                child_node.color = mother_node.color;
+            else
+                child_node.generateValidColor(NodeList, color_list);
+        }
+    }
+
+    void crossOver(const Graph& father, const Graph& mother){
+        colorGraph(father, mother);
+    }
+
+    void exportToDot(const std::string& filename) const {
         MyGraph graph;
         for(const auto &n : NodeList){
             auto vertex_id = add_vertex(graph);
