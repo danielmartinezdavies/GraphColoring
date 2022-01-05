@@ -52,7 +52,9 @@ public:
     Graph(const Graph &g): color_list(g.color_list), NodeList(g.NodeList){
         colorGraph(color_list);
     }
-
+    Graph(const Graph &g, std::string color): color_list(g.color_list), NodeList(g.NodeList){
+        colorGraph({color});
+    }
     ~Graph(){}
 
     void colorGraph(const std::vector<std::string> &color_list) {
@@ -122,7 +124,7 @@ public:
         }
         return colors.size();
     }
-    unsigned long getFitness(){
+    unsigned long getFitness() const{
         return fitness;
     }
 };

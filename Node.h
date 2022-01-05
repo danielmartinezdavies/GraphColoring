@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 
-
+static const std::string empty_color = "None";
 static std::random_device dev;
 std::mt19937 rng(dev());
 
@@ -28,9 +28,11 @@ public:
         }
 
         std::uniform_int_distribution<std::mt19937::result_type> dist6(0,valid_color_list.size()-1);
-        return valid_color_list[dist6(rng)];
+        auto index = dist6(rng);
+        return valid_color_list[index];
     }
     bool hasValidColor(const std::vector<Node> &NodeList, const std::string &color) const{
+        if(color == empty_color) return true;
         for(const auto &index :this->adjacentNodeList){
             if(NodeList[index].color == color) return false;
         }
