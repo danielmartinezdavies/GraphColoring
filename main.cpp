@@ -1,12 +1,10 @@
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/graphviz.hpp>
 #include <iostream>
 #include "Graph.h"
 
 int main() {
     Graph g("../examples/input_file.txt");
-
-    std::cout << "Number of unique colors: " << g.getNumColorsUsed();
+    Graph g2(g);
     g.exportToDot("output.txt");
+    g2.exportToDot("output2.txt");
     return 0;
 }

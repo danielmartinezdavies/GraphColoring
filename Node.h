@@ -4,6 +4,9 @@
 
 #ifndef GRAPHCOLORING_NODE_H
 #define GRAPHCOLORING_NODE_H
+
+#include <vector>
+
 class Node{
 public:
     std::vector<unsigned long> adjacentNodeList;
