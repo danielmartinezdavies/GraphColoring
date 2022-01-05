@@ -45,19 +45,17 @@ public:
 
     void generateSimulations(int num_gen){
         std::shared_ptr<Graph> best_graph = getBestGraph();
+        std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
         for(int i = 0; i < num_gen; i++){
             std::cout << "Generation: " << i << "\n";
-            std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
             if(getBestGraph()->getFitness() < best_graph->getFitness()) {
                 best_graph = getBestGraph();
+                std::cout << "New best fitness found: " << best_graph->getFitness() << std::endl;
             }
-            //std::cout << "Generating parents: "<< std::endl;
+
             std::vector<Graph> parent_list = selectParentList(tournament_size);
-            //std::cout << "Generating children: "<< std::endl;
             std::vector<Graph> child_list = crossOverPopulation(parent_list);
-            //std::cout << "Mutating: "<< std::endl;
             mutatePopulation(mutation_prob, color_list);
-            //std::cout << "Selecting next generation: "<< std::endl;
             selectNextGeneration(child_list, replace_old_generation);
         }
         std::cout << "Finished " << num_gen << " generations \n";
@@ -121,7 +119,10 @@ public:
     }
 
     void selectNextGeneration(const std::vector<Graph> &child_list, bool replace_old_generation){
-        if(replace_old_generation) graph_list = child_list;
+        if(replace_old_generation) {
+            graph_list = child_list;
+            return;
+        }
 
         unsigned long size = graph_list.size();
         graph_list.insert( graph_list.end(), child_list.begin(), child_list.end());

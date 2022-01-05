@@ -61,7 +61,6 @@ public:
         for(auto &node : NodeList){
             node.color = empty_color;
         }
-        fitness = getNumColorsUsed();
     }
 
     void colorGraph(const Graph& father, const Graph& mother,const std::vector<std::string> &color_list){
@@ -76,7 +75,7 @@ public:
             else if(child_node.hasValidColor(NodeList, mother_node.color))
                 child_node.color = mother_node.color;
             else
-                child_node.generateValidColor(NodeList, color_list);
+                child_node.color = child_node.generateValidColor(NodeList, color_list);
         }
         fitness = getNumColorsUsed();
     }

@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <iostream>
 
 static const std::string empty_color = "None";
 static std::random_device dev;
