@@ -9,7 +9,7 @@
 
 struct vertex_info {
     int id;
-    std::string color = "grey";
+    std::string color = "none";
     std::string style = "filled";
 };
 
@@ -19,6 +19,7 @@ class Graph{
 public:
     std::vector<Node> NodeList;
     const std::vector<std::string> color_list;
+    unsigned long fitness;
 
     Graph(const std::string &input_name, const std::vector<std::string> &color_list): color_list(color_list){
         std::ifstream input_file(input_name);
@@ -43,15 +44,22 @@ public:
         colorGraph(color_list);
     }
 
-    Graph(const Graph &g1): color_list(g1.color_list){
-        this->NodeList = g1.NodeList;
+    Graph& operator=(const Graph& g){
+        this->NodeList = g.NodeList;
+        this->fitness = g.fitness;
+        return *this;
+    }
+    Graph(const Graph &g): color_list(g.color_list), NodeList(g.NodeList){
         colorGraph(color_list);
     }
+
+    ~Graph(){}
 
     void colorGraph(const std::vector<std::string> &color_list) {
         for(auto &node : NodeList){
             node.color = node.generateValidColor(NodeList, color_list);
         }
+        fitness = getNumColorsUsed();
     }
 
     void colorGraph(const Graph& father, const Graph& mother){
@@ -68,10 +76,19 @@ public:
             else
                 child_node.generateValidColor(NodeList, color_list);
         }
+        fitness = getNumColorsUsed();
     }
 
     void crossOver(const Graph& father, const Graph& mother){
         colorGraph(father, mother);
+    }
+
+    void mutate(int prob){
+        std::uniform_int_distribution<std::mt19937::result_type> dist(0,prob);
+        for(auto &node : NodeList){
+            if(dist(rng) == 0)
+                node.color = node.generateValidColor(NodeList, color_list);
+        }
     }
 
     void exportToDot(const std::string& filename) const {
@@ -100,13 +117,13 @@ public:
 
     unsigned long getNumColorsUsed(){
         std::set<std::string> colors;
-        for(Node n : NodeList){
+        for(const Node &n : NodeList){
             colors.insert(n.color);
         }
         return colors.size();
     }
     unsigned long getFitness(){
-        return getNumColorsUsed();
+        return fitness;
     }
 };
 #endif //GRAPHCOLORING_GRAPH_H
