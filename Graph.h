@@ -64,6 +64,13 @@ public:
         }
     }
 
+    void colorGraphGreedy(const std::vector<std::string> &color_list) {
+        for(auto &node : NodeList){
+            for(auto &color : color_list)
+                if(node.hasValidColor(NodeList, color)) node.color = color;
+        }
+    }
+
     void colorGraph(const Graph& father, const Graph& mother,const std::vector<std::string> &color_list){
         std::uniform_int_distribution<std::mt19937::result_type> dist2(0,1);
         for(int i = 0; i < father.NodeList.size();i++){

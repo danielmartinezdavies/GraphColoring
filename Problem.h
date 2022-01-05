@@ -31,10 +31,17 @@ public:
             graph_list.push_back(g2);
         }
 
+        getGreedyFitness(g1);
+
     }
 
-    std::string generate_hex_color_code()
-    {
+    void getGreedyFitness(const Graph &g1){
+        Graph g3(g1);
+        g3.colorGraphGreedy(color_list);
+        std::cout << "Greedy fitness: " << g3.getFitness() << std::endl;
+    }
+
+    std::string generate_hex_color_code(){
         std::string hex = "#000000";
         char hex_char[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
         for(int i = 1; i < 7; i++){
@@ -70,7 +77,6 @@ public:
         best_graph->exportToDot("best_solution_found.txt");
 
     }
-
 
     void exportPopulationToFile(){
         for(int i = 0; i < graph_list.size(); i++){
