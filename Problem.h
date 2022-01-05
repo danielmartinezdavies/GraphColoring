@@ -8,9 +8,14 @@
 
 class Problem{
     std::vector<Graph> graph_list;
-    const std::vector<std::string> color_list{"red", "blue", "yellow", "green", "black"};
+    std::vector<std::string> color_list;
 public:
     Problem(const std::string &input_file, int size){
+
+        for(int i = 0; i < size; i++){
+            color_list.emplace_back(generate_hex_color_code());
+        }
+
         Graph g1(input_file, color_list);
         graph_list.push_back(g1);
         for(int i = 1; i < size; i++){
@@ -19,6 +24,17 @@ public:
             graph_list.push_back(g2);
         }
 
+    }
+
+    std::string generate_hex_color_code()
+    {
+        std::string hex = "#000000";
+        char hex_char[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        for(int i = 1; i < 7; i++){
+            std::uniform_int_distribution<std::mt19937::result_type> dist(0,15);
+            hex[i]=hex_char[dist(rng)];
+        }
+        return hex;
     }
 
     void generateSimulations(int num_gen){
