@@ -51,13 +51,15 @@ public:
         return hex;
     }
 
-    void generateSimulations(int num_gen){
+    std::string generateSimulations(int num_gen, int run_num){
         std::shared_ptr<Graph> best_graph = getBestGraph();
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
+        std::string csv = "Generation;Best_Fitness\n";
         int num_gens_since_improve = 0;
         for(int i = 0; true; i++){
             if(num_gens_since_improve > num_gen) break;
+            csv += std::to_string(i) + ";" + std::to_string(best_graph->getFitness()) + "\n";
             std::cout << "Generation: " << i << "\n";
             if(getBestGraph()->getFitness() < best_graph->getFitness()) {
                 best_graph = getBestGraph();
@@ -74,8 +76,9 @@ public:
         std::cout << "Finished " << num_gen << " generations \n";
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
-        best_graph->exportToDot("best_solution_found.txt");
-
+        std::string file = "best_solution_found_" + std::to_string(run_num) + ".txt";
+        best_graph->exportToDot(file);
+        return csv;
     }
 
     void exportPopulationToFile(){
