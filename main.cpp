@@ -1,7 +1,10 @@
 #include "Problem.h"
 #include "Parameters.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+
+    if(argc > 2) return -1;
+    if(argc == 2) input_file = argv[1];
     std::string csv = "";
     for(int i = 0; i < num_runs;i++){
         std::cout << "\n---\n---\n" << "Run " << i << "\n---\n---\n" <<  std::endl;

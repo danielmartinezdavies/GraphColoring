@@ -1,0 +1,9 @@
+graph G {
+0 [fillcolor="#5E8A6D", style=filled];
+1 [fillcolor="#F83959", style=filled];
+2 [fillcolor="#5E8A6D", style=filled];
+3 [fillcolor="#F83959", style=filled];
+0--1 ;
+0--3 ;
+1--2 ;
+}
