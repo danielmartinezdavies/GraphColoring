@@ -18,7 +18,7 @@ if __name__ == '__main__':
         if p2.returncode != 0:
             print("Error while running program")
             print(f"{executable_path}, {input_file}")
-        p = subprocess.run(["diff", output_file , test_file], stdout=subprocess.PIPE)
+        p = subprocess.run(["diff", output_file, test_file], stdout=subprocess.PIPE)
         if p.returncode != 0:
             print("File mismatch")
         exit(p.returncode)

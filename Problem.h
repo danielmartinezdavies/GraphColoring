@@ -32,7 +32,6 @@ public:
         }
 
         getGreedyFitness(g1);
-
     }
 
     void getGreedyFitness(const Graph &g1){
