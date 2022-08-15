@@ -5,6 +5,11 @@
 #ifndef GRAPHCOLORING_PARAMETERS_H
 #define GRAPHCOLORING_PARAMETERS_H
 
+#include <random>
+#include <iostream>
+
+std::mt19937 rng(1);
+
 class Parameters{
 public:
     std::string input_file = "../examples/input_file.txt";
@@ -52,6 +57,9 @@ Parameters parseInputParameters(const std::vector<std::string> &parameters){
         }
         else if (isSmaller(i) && parameters[i] == "--num_runs") {
             p.num_runs = std::stoi(parameters[i+1]);
+        }
+        else if (isSmaller(i) && parameters[i] == "--seed") {
+            rng.seed(std::stoi(parameters[i+1]));
         }
     }
 

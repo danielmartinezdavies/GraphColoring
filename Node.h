@@ -5,20 +5,20 @@
 #ifndef GRAPHCOLORING_NODE_H
 #define GRAPHCOLORING_NODE_H
 
-#include <random>
+#include "Parameters.h"
+
+
 #include <utility>
 #include <vector>
 #include <string>
 #include <iostream>
 
 static const std::string empty_color = "None";
-static std::random_device dev;
-std::mt19937 rng(dev());
+
 
 class Node{
 public:
     std::vector<unsigned long> adjacentNodeList;
-
     std::string color = "grey";
     Node(){}
     explicit Node(std::string color, std::vector<unsigned long> adjacentNodeList): color(std::move(color)), adjacentNodeList(std::move(adjacentNodeList)){}

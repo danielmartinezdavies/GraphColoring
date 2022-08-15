@@ -14,6 +14,7 @@ class Problem{
     const int mutation_prob = 1000;
     const int tournament_size = 2;
     const bool replace_old_generation = true;
+
 public:
     Problem(const std::string &input_file, int size, int mutation_prob, int tournament_size, bool replace_old_generation): mutation_prob(mutation_prob), tournament_size(tournament_size), replace_old_generation(replace_old_generation){
         Graph g1(input_file);
