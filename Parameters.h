@@ -39,12 +39,16 @@ Parameters parseInputParameters(const std::vector<std::string> &parameters){
     for(int i = 0; i < parameters.size();i++) {
         if (parameters[i] == "--help") {
             std::cout << "Possible Parameters:\n\n"
+                         "--input_file"
                          "--population_size "
                          "--mutation_prob"
                          "--tournament_size"
                          "--num_runs"
                          << std::endl;
 
+        }
+        else if (isSmaller(i) && parameters[i] == "--input_file") {
+            p.input_file = parameters[i+1];
         }
         else if (isSmaller(i) && parameters[i] == "--population_size") {
             p.population_size = std::stoi(parameters[i+1]);
