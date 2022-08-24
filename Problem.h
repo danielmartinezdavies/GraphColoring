@@ -56,7 +56,7 @@ public:
         return hex;
     }
 
-    std::string generateSimulations(int num_gen, int run_num, bool disable_printing){
+    std::string generateSimulations(int num_gen, int run_num, bool disable_printing, std::string identifier){
         std::shared_ptr<Graph> best_graph = getBestGraph();
         std::string csv = "";
         if(!disable_printing) {
@@ -83,7 +83,7 @@ public:
         if(!disable_printing) std::cout << "Finished " << num_gen << " generations \n";
         std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
-        std::string file = "best_solution_found_" + std::to_string(run_num) + ".txt";
+        std::string file = identifier + "best_solution_found_" + std::to_string(run_num) + ".txt";
         best_graph->exportToDot(file);
         return csv;
     }

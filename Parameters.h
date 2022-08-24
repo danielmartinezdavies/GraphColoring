@@ -20,6 +20,7 @@ public:
     int  generations_since_improvement = 100;
     int  num_runs = 1;
     bool disable_printing = false;
+    std::string identifier = "";
 
     Parameters() = default;
 
@@ -68,6 +69,9 @@ Parameters parseInputParameters(const std::vector<std::string> &parameters){
         }
         else if (parameters[i] == "--disable_printing") {
             p.disable_printing = true;
+        }
+        else if (isSmaller(i) && parameters[i] == "--identifier") {
+            p.identifier = parameters[i+1];
         }
     }
 
