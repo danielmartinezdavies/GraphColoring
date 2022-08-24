@@ -12,3 +12,11 @@ add_test(NAME test2 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
 add_test(NAME test3 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
         ${PROJECT_BINARY_DIR}/GraphColoring "${CMAKE_SOURCE_DIR}/examples/input_file3.txt"
         ${SOLUTION_FILENAME} ${CMAKE_SOURCE_DIR}/testing/test3_solution.txt)
+
+add_test(NAME test4 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
+        ${PROJECT_BINARY_DIR}/GraphColoring "${CMAKE_SOURCE_DIR}/examples/input_file3.txt"
+        ${SOLUTION_FILENAME} ${CMAKE_SOURCE_DIR}/testing/test3_mutation_prob_solution.txt "--mutation_prob 1000")
+
+add_test(NAME test5 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
+        ${PROJECT_BINARY_DIR}/GraphColoring "${CMAKE_SOURCE_DIR}/examples/input_file3.txt"
+        ${SOLUTION_FILENAME} ${CMAKE_SOURCE_DIR}/testing/test3_pop_size_solution.txt "--population_size 50")
