@@ -19,8 +19,13 @@ public:
     Problem(const std::string &input_file, int size, int mutation_prob, int tournament_size, bool replace_old_generation): mutation_prob(mutation_prob), tournament_size(tournament_size), replace_old_generation(replace_old_generation){
         Graph g1(input_file);
 
+        //Generate minimum number of different colors
         for(int i = 0; i < g1.NodeList.size(); i++){
-            color_list.emplace_back(generate_hex_color_code());
+            std::string generated_color = generate_hex_color_code();
+            while (std::find(color_list.begin(), color_list.end(), generated_color) != color_list.end()) {
+                generated_color = generate_hex_color_code();
+            }
+            color_list.emplace_back(generated_color);
         }
         g1.colorGraph(color_list);
         graph_list.push_back(g1);
