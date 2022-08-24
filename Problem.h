@@ -38,7 +38,7 @@ public:
     void getGreedyFitness(const Graph &g1){
         Graph g3(g1);
         g3.colorGraphGreedy(color_list);
-        std::cout << "Greedy fitness: " << g3.getFitness() << std::endl;
+        //std::cout << "Greedy fitness: " << g3.getFitness() << std::endl;
     }
 
     std::string generate_hex_color_code(){
@@ -76,7 +76,7 @@ public:
             num_gens_since_improve++;
         }
         if(!disable_printing) std::cout << "Finished " << num_gen << " generations \n";
-        if(!disable_printing) std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
+        std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
         std::string file = "best_solution_found_" + std::to_string(run_num) + ".txt";
         best_graph->exportToDot(file);
