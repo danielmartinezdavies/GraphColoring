@@ -8,9 +8,9 @@ int main(int argc, char *argv[]) {
     const Parameters param = parseInputParameters(allArgs);
 
     for(int i = 0; i < param.num_runs;i++){
-        std::cout << "\n---\n---\n" << "Run " << i << "\n---\n---\n" <<  std::endl;
+        if(!param.disable_printing) std::cout << "\n---\n---\n" << "Run " << i << "\n---\n---\n" <<  std::endl;
         Problem p(param.input_file, param.population_size, param.mutation_prob, param.tournament_size, param.replace_old_generation);
-        csv += p.generateSimulations(param.generations_since_improvement, i);
+        csv += p.generateSimulations(param.generations_since_improvement, i, param.disable_printing);
     }
     std::string name = "output" + std::to_string(param.population_size) + "_" + std::to_string(param.mutation_prob)
             + "_" + std::to_string(param.tournament_size) +"_" +  std::to_string(param.replace_old_generation) + ".csv";

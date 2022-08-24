@@ -51,19 +51,21 @@ public:
         return hex;
     }
 
-    std::string generateSimulations(int num_gen, int run_num){
+    std::string generateSimulations(int num_gen, int run_num, bool disable_printing){
         std::shared_ptr<Graph> best_graph = getBestGraph();
-        std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
-
-        std::string csv = "Generation;Best_Fitness\n";
+        std::string csv = "";
+        if(!disable_printing) {
+            std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
+           csv = "Generation;Best_Fitness\n";
+        }
         int num_gens_since_improve = 0;
         for(int i = 0; true; i++){
             if(num_gens_since_improve > num_gen) break;
             csv += std::to_string(i) + ";" + std::to_string(best_graph->getFitness()) + "\n";
-            std::cout << "Generation: " << i << "\n";
+            if(!disable_printing) std::cout << "Generation: " << i << "\n";
             if(getBestGraph()->getFitness() < best_graph->getFitness()) {
                 best_graph = getBestGraph();
-                std::cout << "New best fitness found: " << best_graph->getFitness() << std::endl;
+                if(!disable_printing) std::cout << "New best fitness found: " << best_graph->getFitness() << std::endl;
                 num_gens_since_improve = 0;
             }
 
@@ -73,8 +75,8 @@ public:
             selectNextGeneration(child_list, replace_old_generation);
             num_gens_since_improve++;
         }
-        std::cout << "Finished " << num_gen << " generations \n";
-        std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
+        if(!disable_printing) std::cout << "Finished " << num_gen << " generations \n";
+        if(!disable_printing) std::cout << "Best fitness found: " << best_graph->getFitness() << std::endl;
 
         std::string file = "best_solution_found_" + std::to_string(run_num) + ".txt";
         best_graph->exportToDot(file);

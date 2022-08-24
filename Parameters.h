@@ -19,6 +19,7 @@ public:
     bool replace_old_generation = true;
     int  generations_since_improvement = 100;
     int  num_runs = 1;
+    bool disable_printing = false;
 
     Parameters() = default;
 
@@ -64,6 +65,9 @@ Parameters parseInputParameters(const std::vector<std::string> &parameters){
         }
         else if (isSmaller(i) && parameters[i] == "--seed") {
             rng.seed(std::stoi(parameters[i+1]));
+        }
+        else if (parameters[i] == "--disable_printing") {
+            p.disable_printing = true;
         }
     }
 

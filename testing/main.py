@@ -14,7 +14,7 @@ if __name__ == '__main__':
         test_file = str(sys.argv[4])
 
 
-        p2 = subprocess.run([executable_path, "--input_file", input_file], stdout=subprocess.PIPE)
+        p2 = subprocess.run([executable_path, "--input_file", input_file, "--disable_printing"], stdout=subprocess.PIPE)
 
         cwd = os.getcwd()
         if p2.returncode != 0:
