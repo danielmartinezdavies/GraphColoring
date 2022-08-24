@@ -1,0 +1,29 @@
+graph G {
+0 [fillcolor="#2F3CCB", style=filled];
+1 [fillcolor="#2F3CCB", style=filled];
+2 [fillcolor="#37E308", style=filled];
+3 [fillcolor="#265A6E", style=filled];
+4 [fillcolor="#37E308", style=filled];
+5 [fillcolor="#37E308", style=filled];
+6 [fillcolor="#265A6E", style=filled];
+7 [fillcolor="#2F3CCB", style=filled];
+8 [fillcolor="#37E308", style=filled];
+9 [fillcolor="#37E308", style=filled];
+10 [fillcolor="#265A6E", style=filled];
+0--4 ;
+0--6 ;
+1--2 ;
+1--3 ;
+1--4 ;
+1--8 ;
+1--9 ;
+3--4 ;
+3--5 ;
+4--10 ;
+5--6 ;
+5--7 ;
+6--7 ;
+6--8 ;
+7--8 ;
+8--10 ;
+}
