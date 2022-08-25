@@ -1,4 +1,7 @@
+
 # GraphColoring
+![branch parameter](https://github.com/danielmartinezdavies/GraphColoring/actions/workflows/cmake.yml/badge.svg?branch=main)
+
 This project offers a solution to the Graph Coloring problem using 
 a Genetic Algorithm. Graph Coloring tries to find the least amount of 
 colors needed such that two adjacent nodes do not share the same color.
@@ -6,11 +9,16 @@ Graphs are read and written in the dot language.
 
 For example:
 
-![picture of a graph without any coloring](./resources/graph.png)
-![picture of a graph without any coloring](./resources/graph_colored.png)
+<p align="center">
+    <img src="./resources/graph.png" alt="picture of a graph without any coloring"/>
+    <img src="./resources/graph_colored.png" alt="picture of a graph without any coloring"/>
+</p>
 
-![picture of a larger second graph without any coloring](./resources/graph2.png) 
-![picture of a larger second graph without any coloring](./resources/graph2_colored.png)
+For a more complex graph, 3 different colors are required: 
+<p align="center">
+    <img src="./resources/graph2.png" alt="picture of a graph without any coloring"/>
+    <img src="./resources/graph2_colored.png" alt="picture of a graph without any coloring"/>
+</p>
 
 ## The Algorithm
 A random initial population is generated. A pseudo random number generator 
