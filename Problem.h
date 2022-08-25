@@ -22,6 +22,7 @@ public:
     Problem(const std::string &input_file, int size, int mutation_prob, int tournament_size, bool replace_old_generation): base_graph(input_file), mutation_prob(mutation_prob), tournament_size(tournament_size), replace_old_generation(replace_old_generation){
 
         int maximum_color = base_graph.getMaximumDegree() + 1;
+        std::cout << "Maximum fitness :" << maximum_color << std::endl;
         //Generate minimum number of different colors
         for(int i = 0; i < maximum_color; i++){
             int generated_color = generate_hex_color_code();
