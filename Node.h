@@ -6,6 +6,7 @@
 #define GRAPHCOLORING_NODE_H
 
 #include "Parameters.h"
+#include "ColoredNode.h"
 
 
 #include <utility>
@@ -13,28 +14,26 @@
 #include <string>
 #include <iostream>
 
-static const std::string empty_color = "None";
-
 
 class Node{
 public:
     std::vector<unsigned long> adjacentNodeList;
-    std::string color = "grey";
     Node(){}
-    explicit Node(std::string color, std::vector<unsigned long> adjacentNodeList): color(std::move(color)), adjacentNodeList(std::move(adjacentNodeList)){}
-    std::string generateValidColor(const std::vector<Node> &NodeList, const std::vector<std::string> &color_list) const{
+    explicit Node(std::vector<unsigned long> adjacentNodeList):  adjacentNodeList(std::move(adjacentNodeList)){}
+
+    std::string generateValidColor(const std::vector<ColoredNode> &colored_node_list, const std::vector<std::string> &color_list) const{
         std::vector<std::string> valid_color_list;
         for(auto &color : color_list){
-            if(this->hasValidColor(NodeList, color)) valid_color_list.push_back(color);
+            if(this->hasValidColor(colored_node_list, color)) valid_color_list.push_back(color);
         }
 
         std::uniform_int_distribution<std::mt19937::result_type> dist6(0,valid_color_list.size()-1);
         auto index = dist6(rng);
         return valid_color_list[index];
     }
-    bool hasValidColor(const std::vector<Node> &NodeList, const std::string &color) const{
+    bool hasValidColor(const std::vector<ColoredNode> &colored_node_list, const std::string &color) const{
         for(const auto &index :this->adjacentNodeList){
-            if(NodeList[index].color == color) return false;
+            if(colored_node_list[index].node_color == color) return false;
         }
         return true;
     }
