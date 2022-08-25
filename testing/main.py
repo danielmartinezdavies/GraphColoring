@@ -40,7 +40,7 @@ if __name__ == '__main__':
             current_test_file = test_file[:test_file_index] + i_string + test_file[test_file_index:]
             p = subprocess.run(["diff", os.getcwd() + "/" + current_output_file, current_test_file], stdout=subprocess.PIPE)
             if p.returncode != 0:
-                print(f"File mismatch on run {i}. {current_output_file} , {current_test_file}")
+                print(f"File mismatch on run {i}.")
                 exit(p.returncode)
 
 
