@@ -40,13 +40,17 @@ Parameters parseInputParameters(const std::vector<std::string> &parameters){
     auto isSmaller = [&](int i) {return i < parameters.size()-1;};
     for(int i = 0; i < parameters.size();i++) {
         if (parameters[i] == "--help") {
-            std::cout << "Possible Parameters:\n\n"
-                         "--input_file"
-                         "--population_size "
-                         "--mutation_prob"
-                         "--tournament_size"
-                         "--num_runs"
+            std::cout << "Possible Parameters:\n"
+                         "--input_file\n"
+                         "--population_size\n"
+                         "--mutation_prob\n"
+                         "--tournament_size\n"
+                         "--num_runs\n"
+                         "--seed\n"
+                         "--disable_printing\n"
+                         "--identifier\n"
                          << std::endl;
+            exit(0);
 
         }
         else if (isSmaller(i) && parameters[i] == "--input_file") {
