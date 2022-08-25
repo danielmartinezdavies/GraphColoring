@@ -33,6 +33,6 @@ add_test(NAME test8 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
         ${PROJECT_BINARY_DIR}/GraphColoring "${CMAKE_SOURCE_DIR}/examples/input_file3.txt"
         ${SOLUTION_FILENAME} ${CMAKE_SOURCE_DIR}/testing/test3_num_runs_solution.txt "--num_runs 3" t8)
 
-add_test(NAME test9 WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/test9 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
+add_test(NAME test9 COMMAND python3 ${CMAKE_SOURCE_DIR}/testing/main.py
         ${PROJECT_BINARY_DIR}/GraphColoring "${CMAKE_SOURCE_DIR}/examples/input_file3.txt"
         ${SOLUTION_FILENAME} ${CMAKE_SOURCE_DIR}/testing/test3_multiple_params.txt "--num_runs 3 --tournament_size 3 --population_size 1000" t9)
