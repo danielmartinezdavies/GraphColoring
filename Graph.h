@@ -63,8 +63,18 @@ public:
         for(auto &node : NodeList){
             node.color = empty_color;
         }
+        fitness = 0;
     }
 
+    int getMaximumDegree() {
+        int maximum = 0;
+        for(auto & node : NodeList) {
+            if(maximum < node.adjacentNodeList.size()){
+                maximum = node.adjacentNodeList.size();
+            }
+        }
+        return maximum;
+    }
     void colorGraphGreedy(const std::vector<std::string> &color_list) {
         for(auto &node : NodeList){
             for(auto &color : color_list)
@@ -97,12 +107,13 @@ public:
         colorGraph(father, mother, color_list);
     }
 
-    void mutate(int prob, const std::vector<std::string> &color_list){
+    void mutate(int prob, const std::vector<std::string> &color_list) {
         std::uniform_int_distribution<std::mt19937::result_type> dist(0,prob);
         for(auto &node : NodeList){
             if(dist(rng) == 0)
                 node.color = node.generateValidColor(NodeList, color_list);
         }
+        fitness = getNumColorsUsed();
     }
 
     void exportToDot(const std::string& filename) const {
