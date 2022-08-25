@@ -21,7 +21,7 @@ public:
 
     ~ColoredGraph(){}
 
-    void colorGraph(std::vector<Node> &node_list, const std::vector<std::string> &color_list) {
+    void colorGraph(std::vector<Node> &node_list, const std::vector<int> &color_list) {
         for(int i = 0; i < colored_node_list.size();i++){
             colored_node_list[i].node_color = node_list[i].generateValidColor(colored_node_list, color_list);
         }
@@ -34,7 +34,7 @@ public:
         fitness = 0;
     }
 
-    void colorGraphGreedy(std::vector<Node> &node_list, const std::vector<std::string> &color_list) {
+    void colorGraphGreedy(std::vector<Node> &node_list, const std::vector<int> &color_list) {
         for(int i = 0; i < colored_node_list.size();i++){
             for(auto &color : color_list)
                 if(node_list[i].hasValidColor(colored_node_list, color)) {
@@ -45,7 +45,7 @@ public:
         fitness = getNumColorsUsed();
     }
 
-    void colorGraph(std::vector<Node> &node_list, const ColoredGraph& father, const ColoredGraph& mother,const std::vector<std::string> &color_list){
+    void colorGraph(std::vector<Node> &node_list, const ColoredGraph& father, const ColoredGraph& mother,const std::vector<int> &color_list){
         std::uniform_int_distribution<std::mt19937::result_type> dist2(0,1);
         for(int i = 0; i < father.colored_node_list.size();i++){
             auto &child_node = colored_node_list[i];
@@ -62,11 +62,11 @@ public:
         fitness = getNumColorsUsed();
     }
 
-    void crossOver(std::vector<Node> &node_list,const ColoredGraph& father, const ColoredGraph& mother, const std::vector<std::string> &color_list){
+    void crossOver(std::vector<Node> &node_list,const ColoredGraph& father, const ColoredGraph& mother, const std::vector<int> &color_list){
         colorGraph(node_list, father, mother, color_list);
     }
 
-    void mutate(std::vector<Node> &node_list, int prob, const std::vector<std::string> &color_list) {
+    void mutate(std::vector<Node> &node_list, int prob, const std::vector<int> &color_list) {
         std::uniform_int_distribution<std::mt19937::result_type> dist(0,prob);
         for(int i = 0; i < colored_node_list.size();i++){
             if(dist(rng) == 0)
@@ -79,7 +79,9 @@ public:
         Graph::MyGraph graph;
         for(const auto &n : colored_node_list){
             auto vertex_id = add_vertex(graph);
-            graph[vertex_id].color = n.node_color;
+            std::stringstream stream;
+            stream << std::hex << n.node_color;
+            graph[vertex_id].color = "#" + stream.str();
         }
         for(int i = 0; i < node_list.size();i++){
             Node n = node_list[i];
@@ -100,7 +102,7 @@ public:
     }
 
     unsigned long getNumColorsUsed(){
-        std::set<std::string> colors;
+        std::set<int> colors;
         for(const ColoredNode &n : colored_node_list){
             colors.insert(n.node_color);
         }

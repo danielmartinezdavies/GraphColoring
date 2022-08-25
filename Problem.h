@@ -12,7 +12,7 @@ class Problem{
 
     Graph base_graph;
     std::vector<ColoredGraph> graph_list;
-    std::vector<std::string> color_list;
+    std::vector<int> color_list;
 
     const int mutation_prob = 1000;
     const int tournament_size = 2;
@@ -24,7 +24,7 @@ public:
         int maximum_color = base_graph.getMaximumDegree() + 1;
         //Generate minimum number of different colors
         for(int i = 0; i < maximum_color; i++){
-            std::string generated_color = generate_hex_color_code();
+            int generated_color = generate_hex_color_code();
             while (std::find(color_list.begin(), color_list.end(), generated_color) != color_list.end()) {
                 generated_color = generate_hex_color_code();
             }
@@ -52,13 +52,10 @@ public:
         return g3.getFitness();
     }
 
-    std::string generate_hex_color_code(){
-        std::string hex = "#000000";
-        char hex_char[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-        for(int i = 1; i < 7; i++){
-            std::uniform_int_distribution<std::mt19937::result_type> dist(0,15);
-            hex[i]=hex_char[dist(rng)];
-        }
+    int generate_hex_color_code(){
+        int hex = 0;
+        std::uniform_int_distribution<std::mt19937::result_type> dist(0,255*255*255);
+        hex = dist(rng);
         return hex;
     }
 
@@ -141,7 +138,7 @@ public:
         return child_list;
     }
 
-    void mutatePopulation(int prob, const std::vector<std::string> &color_list){
+    void mutatePopulation(int prob, const std::vector<int> &color_list){
         for(auto graph : graph_list){
             graph.mutate(base_graph.NodeList, prob, color_list);
         }

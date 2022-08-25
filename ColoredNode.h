@@ -9,14 +9,14 @@
 #include <iostream>
 #include <random>
 
-static const std::string empty_color = "None";
+static const int empty_color = -1;
 
 
 class ColoredNode{
 public:
-    std::string node_color = "grey";
+    int node_color = 0;
     ColoredNode()= default;
-    explicit ColoredNode(std::string color): node_color(std::move(color)) {}
+    explicit ColoredNode(int color): node_color(color) {}
 };
 
 
