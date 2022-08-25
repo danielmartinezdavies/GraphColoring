@@ -101,7 +101,7 @@ public:
         output_file.close();
     }
 
-    unsigned long getNumColorsUsed(){
+    unsigned long getNumColorsUsed() const{
         std::set<int> colors;
         for(const ColoredNode &n : colored_node_list){
             colors.insert(n.node_color);
