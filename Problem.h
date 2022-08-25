@@ -40,10 +40,13 @@ public:
         getGreedyFitness(g1);
     }
 
-    void getGreedyFitness(const Graph &g1){
+    unsigned getGreedyFitness(const Graph &g1){
         Graph g3(g1);
+        g3.colorGraphEmpty();
         g3.colorGraphGreedy(color_list);
-        //std::cout << "Greedy fitness: " << g3.getFitness() << std::endl;
+        g3.exportToDot("greedy_solution.txt");
+        std::cout << "Greedy fitness: " << g3.getNumColorsUsed() << std::endl;
+        return g3.getFitness();
     }
 
     std::string generate_hex_color_code(){

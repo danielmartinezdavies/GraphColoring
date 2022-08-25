@@ -68,8 +68,12 @@ public:
     void colorGraphGreedy(const std::vector<std::string> &color_list) {
         for(auto &node : NodeList){
             for(auto &color : color_list)
-                if(node.hasValidColor(NodeList, color)) node.color = color;
+                if(node.hasValidColor(NodeList, color)) {
+                    node.color = color;
+                    break;
+                }
         }
+        fitness = getNumColorsUsed();
     }
 
     void colorGraph(const Graph& father, const Graph& mother,const std::vector<std::string> &color_list){
