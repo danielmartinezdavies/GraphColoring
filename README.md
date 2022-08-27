@@ -111,3 +111,33 @@ Alternatively, graphviz can be used to generate the image file:
 
     sudo apt install graphviz
     dot -Tpng best_solution_found.txt -o filename.png
+
+## Additional Information
+### Directories
+The examples folder includes different input files for solving different graphs.
+
+The testing folder has different output files used for testing purposes. These are also
+written in the dot language.
+
+The script folder includes a python script for generating random graphs. 
+It takes two parameters: the number of nodes and an approximation of 
+the number of edges per node. The graph generated is written in the dot language to 
+the standard output.
+
+### Greedy Algorithm
+The project, in addition to using a Genetic Algorithm, will also use a 
+Greedy algorithm for comparing results. The Greedy solution has no backtracking
+so incorrect early coloring will result in bad solutions. However, it is very fast
+and so it offers a good baseline for comparison with the Genetic Algorithm.
+### Scaling
+This Genetic Algorithm for Graph Coloring generates good solutions for medium size graphs. 
+For small graphs, the Greedy algorithm will usually find the best solution.
+For large graphs, the algorithm does not scale well and the Greedy solution
+will find a lower number of colors needed.
+
+Medium sized graphs will give the Greedy algorithm difficulties for finding 
+the lowest possible number of colors, whereas the Genetic Algorithm 
+will provide better results.
+
+
+
