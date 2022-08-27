@@ -1,14 +1,14 @@
 graph G {
-0 [fillcolor="#AE6786", style=filled];
-1 [fillcolor="#265A6E", style=filled];
-2 [fillcolor="#AE6786", style=filled];
-3 [fillcolor="#0420EA", style=filled];
-4 [fillcolor="#0420EA", style=filled];
-5 [fillcolor="#265A6E", style=filled];
-6 [fillcolor="#AE6786", style=filled];
-7 [fillcolor="#0420EA", style=filled];
-8 [fillcolor="#AE6786", style=filled];
-9 [fillcolor="#AE6786", style=filled];
+0 [fillcolor="#698563", style=filled];
+1 [fillcolor="#768", style=filled];
+2 [fillcolor="#698563", style=filled];
+3 [fillcolor="#206b81", style=filled];
+4 [fillcolor="#206b81", style=filled];
+5 [fillcolor="#768", style=filled];
+6 [fillcolor="#698563", style=filled];
+7 [fillcolor="#206b81", style=filled];
+8 [fillcolor="#698563", style=filled];
+9 [fillcolor="#768", style=filled];
 0--1 ;
 0--3 ;
 0--5 ;
