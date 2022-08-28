@@ -90,8 +90,12 @@ There is a suite of tests included in the project. These can be run using the fo
 
 Compiling this project will generate a binary called GraphColoring.
 Simulation parameters can be specified as command line arguments.
-Arguments of interest include some of the following:
+The examples folder includes different input files for solving different graphs.
+A possible execution:
+    
+    ./GraphColoring --input_file ../resources/input_file.txt --seed 1 --num_runs 2
 
+Arguments of interest include some of the following:
 - **--help**: view available arguments.
 - **--input_file**: specify location of initial graph file.
 - **--population_size**: indicate the population size for each generation.
@@ -114,8 +118,6 @@ Alternatively, graphviz can be used to generate the image file:
 
 ## Additional Information
 ### Directories
-The examples folder includes different input files for solving different graphs.
-
 The testing folder has different output files used for testing purposes. These are also
 written in the dot language.
 
